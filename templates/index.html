@@ -11,7 +11,32 @@
     <div class="col-md-12">
       <h2>Items</h2>
       <ul class="list-group mb-4">
-        <!-- List the todo items here -->
+        {% if message %}
+            <p class="lead mark">{{message}}</p>
+        {%endif%}
+        <Table class="table-bordered">
+            <tr>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+              </tr>
+
+            {% for item in data.values() %}
+              <tr>
+                  <td> {{item["title"]}}</td>
+                  <td> {{item["description"]}}</td>
+                  <td> {{item["status"]}}</td>
+                  <td><a href="/delete?id={{item['id']}}">Delete</a>
+                      <a href="/update?id={{item['id']}}">Update</a>
+                  </td>
+              </tr>
+            {% endfor %}
+
+            <tr>
+                  <td colspan="3"></td>
+                  <td><a href="/add">Add New Item</a></td>
+              </tr>
       </ul>
     </div>
   </div>
