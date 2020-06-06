@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block title %}Add To-Do Item{% endblock %}
+{% block content %}
+
+<div class="jumbotron">
+   <p class="lead">Form to add new To-Do Item</p>
+    <form action="/add" method="post">
+      <Table>
+       <tr style="align:middle">
+        <td> <label for="title">To-Do Item Title</label> </td>
+        <td> <input name="title" id = "title" required> </td>
+       </tr>
+       <tr>
+        <td> <label for="description">To-Do Item Description</label> </td>
+        <td> <textarea name="description" id="description"></textarea> </td>
+       </tr>
+       <tr>
+        <td> <label for="status">Status</label> </td>
+        <td>
+         <select name="status" id="status">
+          <option value="{{statuses[0]}}" selected>{{statuses[0]}}</option>
+           {% for status in statuses[1:] %}
+            <option value="{{status}}">{{status}}</option>
+           {% endfor %}
+         </select>
+        </td>
+       </tr>
+       <tr>
+        <td></td>
+        <td> <input type="submit" value="Add ToDo Item"></td>
+       </tr>
+      </Table>
+    </form>
+</div>
+{% endblock %}
