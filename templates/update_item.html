@@ -8,30 +8,30 @@
         <input type="hidden" id="id" name="id" value="{{item['id']}}">
          <Table>
           <tr style="align:middle">
-              <td> <label for="title">To-Do Item Title</label> </td>
-              <td> <input name="title" id = "title" value="{{item['title']}}"> </td>
+           <td> <label for="title">To-Do Item Title</label> </td>
+           <td> <input name="title" id = "title" value="{{item['title']}}" required> </td>
           </tr>
           <tr>
-              <td> <label for="description">To-Do Item Description</label> </td>
-              <td> <textarea name="description" id="description" >{{item['description']}}</textarea> </td>
+           <td> <label for="description">To-Do Item Description</label> </td>
+           <td> <textarea name="description" id="description" >{{item['description']}}</textarea> </td>
           </tr>
           <tr>
-              <td> <label for="status">Status</label> </td>
-              <td>
-                  <select name="status" id="status">
-                      {% for status in statuses %}
-                        {% if status ==  item['status']%}
-                            <option value="{{status}}" selected>{{status}}</option>
-                        {% else %}
-                            <option value="{{status}}">{{status}}</option>
-                         {% endif %}
-                      {% endfor %}
-                  </select>
-              </td>
+           <td> <label for="status">Status</label> </td>
+           <td>
+              <select name="status" id="status">
+                  {% for status in statuses %}
+                    {% if status ==  item['status']%}
+                        <option value="{{status}}" selected>{{status}}</option>
+                    {% else %}
+                        <option value="{{status}}">{{status}}</option>
+                     {% endif %}
+                  {% endfor %}
+              </select>
+           </td>
           </tr>
           <tr>
-              <td> </td>
-              <td> <input type="submit" value="Update ToDo Item"></td>
+           <td> </td>
+           <td> <input type="submit" value="Update ToDo Item"></td>
           </tr>
       </Table>
     </form>
