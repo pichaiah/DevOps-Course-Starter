@@ -19,7 +19,7 @@ def delete_board(id):
     url = f"https://api.trello.com/1/boards/{id}"
     querystring = {"key": key, "token": token}
     response = requests.request("DELETE", url, params=querystring)    
-    return response.text()
+    return response.text
 
 def get_board(id):
     url = f"https://api.trello.com/1/boards/{id}"

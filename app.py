@@ -28,7 +28,8 @@ def add_board():
 
 @app.route('/delete_board')
 def delete_board():
-    board_id = request.args.get('board_id')    
+    board_id = request.args.get('id')  
+    trello.delete_board(board_id)
     return redirect(url_for('get_boards'))
 
 
@@ -43,13 +44,6 @@ def add_list():
         board_id = request.args.get('board_id')
         board = trello.get_board(board_id)    
         return render_template("add_new_list.html", board=board)
-
-@app.route('/archive_list')
-def archive_list():
-    board_id = request.args.get('board_id')
-    list_id = request.args.get('list_id')
-    trello.archive_list(list_id)    
-    return redirect(url_for('view_board', id=board_id))
 
 
 @app.route('/add_card', methods=['GET', 'POST'])
@@ -79,11 +73,6 @@ def move_card():
         lists = trello.get_lists(board_id)
         card = trello.get_card(card_id)        
         return render_template("move_card.html", card=card, lists=lists)
-
-@app.route('/delete_card')
-def delete_card():
-    card_id = request.args.get('card_id')    
-    return redirect(url_for('get_boards'))
 
 
 if __name__ == '__main__':
