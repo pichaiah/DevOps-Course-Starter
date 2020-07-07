@@ -52,7 +52,7 @@ def add_card():
         card_name = request.form['card_name']
         list_id = request.form['list_id']
         board_id = request.form['board_id']         
-        card_id = trello.create_card(list_id, card_name)
+        trello.create_card(list_id, card_name)
         return redirect(url_for('view_board', id=board_id))
     else:
         board_id = request.args.get('board_id')
@@ -74,6 +74,12 @@ def move_card():
         card = trello.get_card(card_id)        
         return render_template("move_card.html", card=card, lists=lists)
 
+@app.route('/delete_card')
+def delete_card():
+    card_id = request.args.get('card_id')    
+    board_id = request.args.get('board_id')
+    trello.delet_card(card_id)
+    return redirect(url_for('view_board', id=board_id))
 
 if __name__ == '__main__':
     app.run()

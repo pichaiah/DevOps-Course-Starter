@@ -45,7 +45,10 @@
         <tr>
           <td> <a href="/view_card?id={{card['id']}}">{{card['name']}}</a></td>
           <td> <a href="/view_list?id={{card['list_id']}}">{{card['list_name']}}</a></td>
-          <td><a href="/move_card?board_id={{board['id']}}&card_id={{card['id']}}">Move Card</a></td>
+          <td>
+            <a href="/move_card?board_id={{board['id']}}&card_id={{card['id']}}">Move Card</a> |
+            <a href="/delete_card?board_id={{board['id']}}&card_id={{card['id']}}">Delete Card</a>
+          </td>
         </tr>
         {% endfor %}
       </Table>

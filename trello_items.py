@@ -38,7 +38,6 @@ def get_boards():
     for entry in json_data:
         data.append({'id': entry['id'], 'name': entry['name']}) 
     return data
-
  
 def create_list(board_id, list_name):
     url = f"https://api.trello.com/1/boards/{board_id}/lists"
@@ -46,14 +45,6 @@ def create_list(board_id, list_name):
     response = requests.request("POST", url, headers=headers, params=querystring)
     list_id = response.json()["id"]
     return list_id
-
-
-def archive_list(id):
-    url = f"https://api.trello.com/1/lists/{id}/closed"
-    print("URL:{}",url)
-    querystring = {"key": key, "token": token}
-    response = requests.request("PUT", url, params=querystring)    
-    return response.text
 
 def get_lists(board_id):
     url = f"https://api.trello.com/1/boards/{board_id}/lists"
@@ -108,3 +99,9 @@ def get_cards_and_lists(board_d):
         for card in list_cards:
             cards.append({'id': card['id'], 'name': card['name'], 'list_id': list_id, 'list_name': list_name})    
     return cards
+
+def delet_card(id):
+    url = f"https://api.trello.com/1/cards/{id}"
+    querystring = {"key": key, "token": token}
+    response = requests.request("DELETE", url, params=querystring)
+    return response.text
