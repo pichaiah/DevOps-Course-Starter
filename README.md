@@ -12,6 +12,9 @@ $ source setup.sh
 ```bash
 $ source setup.sh --windows
 ```
+```
+update trello_items.py with trello key and token.
+```
 
 Once the setup script has completed and all packages have been installed, start the Flask app by running:
 ```bash
