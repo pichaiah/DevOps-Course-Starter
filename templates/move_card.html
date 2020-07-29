@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block title %}Add new card{% endblock %}
+{% block content %}
+
+<div class="jumbotron">
+   <p class="lead">Form to move card from one list to another</p>
+    <form action="/move_card" method="post">
+      <input type="hidden" id="id" name="id" value="{{card['id']}}">
+      <input type="hidden" id="board_id" name="board_id" value="{{card['board_id']}}">
+      <Table>
+       <tr style="align:middle">
+        <td> <label for="card_name">Card Name</label> </td>
+        <td><input name="card_name" id = "card_name" value="{{card['name']}}" readonly> </td>
+       </tr>       
+       <tr>
+        <td> <label for="list_id">List</label> </td>
+        <td>
+          <select name="list_id" id="list_id">
+              {% for list in lists %}
+                {% if card['list_id'] ==  list['id']%}
+                    <option value="{{list['id']}}" selected>{{list['name']}} (Current)</option>
+                {% else %}
+                    <option value="{{list['id']}}">{{list['name']}}</option>
+                 {% endif %}
+              {% endfor %}
+          </select>
+       </td>
+       </tr>
+       <tr>
+        <td></td>
+        <td> <input type="submit" value="Move Card"></td>
+       </tr>
+      </Table>
+    </form>
+</div>
+{% endblock %}

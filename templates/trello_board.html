@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block title %}Add To-Do Item{% endblock %}
+{% block content %}
+
+<div class="jumbotron">
+  <p class="lead">Trello Board Name : {{board['name']}}</p>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <h2>Lists</h2>
+    <ul class="list-group mb-4">
+      <Table class="table-bordered">
+        <tr>
+          <th>Name</th>          
+        </tr>
+        <tr>          
+          <td align="right"><a href="/add_list?board_id={{board['id']}}">Add New List</a></td>
+        </tr>
+        {% for list in lists %}
+        <tr>
+          <td> {{list['name']}}</td>          
+        </tr>
+        {% endfor %}
+      </Table>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <h2>Cards</h2>
+    <ul class="list-group mb-4">
+      <Table class="table-bordered">
+        <tr>
+          <th>Name</th>
+          <th>List Name</th>
+          <th>Actions</th>
+        </tr>
+        <tr>
+          <td colspan="2"></td>
+          <td><a href="/add_card?board_id={{board['id']}}">Add New Card</a></td>
+
+        </tr>
+        {% for card in cards %}
+        <tr>
+          <td> <a href="/view_card?id={{card['id']}}">{{card['name']}}</a></td>
+          <td> <a href="/view_list?id={{card['list_id']}}">{{card['list_name']}}</a></td>
+          <td>
+            <a href="/move_card?board_id={{board['id']}}&card_id={{card['id']}}">Move Card</a> |
+            <a href="/delete_card?board_id={{board['id']}}&card_id={{card['id']}}">Delete Card</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </Table>
+    </ul>
+  </div>
+</div>
+
+{% endblock %}
