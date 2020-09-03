@@ -12,8 +12,14 @@ $ source setup.sh
 ```bash
 $ source setup.sh --windows
 ```
+Setup the below Environment variables for Trello API
 ```
-update trello_items.py with trello key and token.
+KEY
+TOKEN
+BOARD_ID
+TODO_LIST_ID
+DOING_LIST_ID
+DONE_LIST_ID
 ```
 
 Once the setup script has completed and all packages have been installed, start the Flask app by running:

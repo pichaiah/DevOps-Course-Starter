@@ -1,107 +1,77 @@
 import requests
 import json
+import os
+import Item as it
 
-key = "<your trello key>"
-token = "<your trello token>"
 headers = {
    "Accept": "application/json"
 }
- 
 
-def create_board(board_name):
-    url = "https://api.trello.com/1/boards/"
-    querystring = {"name": board_name, "key": key, "token": token}
-    response = requests.request("POST", url, params=querystring)
-    board_id = response.json()["shortUrl"].split("/")[-1].strip()
-    return board_id
+def get_all_items():
+    params = (
+        ('key', os.environ['KEY']),
+        ('token', os.environ['TOKEN']),        
+    )
+
+    r = requests.get('https://api.trello.com/1/boards/' + os.environ['BOARD_ID'] + '/cards', params=params)
+    data = r.json()
+    item_list = []
+    for card in data:
+        if card['idList'] == os.environ['TODO_LIST_ID']:
+            card['idList'] = 'To Do'
+        elif card['idList'] == os.environ['DOING_LIST_ID']:
+            card['idList'] = 'Doing'
+        elif card['idList'] == os.environ['DONE_LIST_ID']:
+            card['idList'] = 'Done'
+
+        item_list.append(it.Item(id=card['id'], status=card['idList'], title=card['name'], last_modified=card['dateLastActivity']))
+        
+    return item_list
+
+def create_todo_item(title):
+    params = (
+        ('key', os.environ['KEY']),
+        ('token', os.environ['TOKEN']),
+        ('name', title),
+        ('idList', os.environ['TODO_LIST_ID'])
+    )
+    requests.post('https://api.trello.com/1/cards', params=params)
+
+def move_to_doing(id):
+    params = (
+        ('key', os.environ['KEY']),
+        ('token', os.environ['TOKEN']),
+        ('idList', os.environ['DOING_LIST_ID'])
+    )
+    requests.put("https://api.trello.com/1/cards/" + id, params=params)
+
+def move_to_done(id):    
+    params = (
+        ('key', os.environ['KEY']),
+        ('token', os.environ['TOKEN']),
+        ('idList', os.environ['DONE_LIST_ID'])
+    )
+    requests.put("https://api.trello.com/1/cards/" + id, params=params)
+
+def delete_item(id):
+    params = (
+        ('key', os.environ['Key']),
+        ('token', os.environ['TOKEN'])
+    )
+    requests.delete("https://api.trello.com/1/cards/" + id, params=params)
+
+def create_board():
+    params = (
+        ('key', os.environ['Key']),
+        ('token', os.environ['TOKEN']),
+        ('name', 'TestBoard1234')
+    )
+    response = requests.post("https://api.trello.com/1/boards/", params=params)
+    return response.json()['id']
 
 def delete_board(id):
-    url = f"https://api.trello.com/1/boards/{id}"
-    querystring = {"key": key, "token": token}
-    response = requests.request("DELETE", url, params=querystring)    
-    return response.text
-
-def get_board(id):
-    url = f"https://api.trello.com/1/boards/{id}"
-    querystring = {"key": key, "token": token}
-    response = requests.request("GET", url, params=querystring)
-    json_data = response.json()
-    board = {"id": id, "name": json_data['name'] }    
-    return board
-
-def get_boards():
-    url = "https://api.trello.com/1/members/me/boards"
-    querystring = {"key": key, "token": token}
-    response = requests.request("GET", url, params=querystring)
-    data = [] 
-    json_data = response.json()
-    for entry in json_data:
-        data.append({'id': entry['id'], 'name': entry['name']}) 
-    return data
- 
-def create_list(board_id, list_name):
-    url = f"https://api.trello.com/1/boards/{board_id}/lists"
-    querystring = {"name": list_name, "key": key, "token": token}
-    response = requests.request("POST", url, headers=headers, params=querystring)
-    list_id = response.json()["id"]
-    return list_id
-
-def get_lists(board_id):
-    url = f"https://api.trello.com/1/boards/{board_id}/lists"
-    querystring = {"key": key, "token": token}
-    response = requests.request("GET", url, params=querystring)  
-    data = [] 
-    json_data = response.json()
-    for entry in json_data:
-        data.append({'id': entry['id'], 'name': entry['name']}) 
-    return data
-
- 
-def create_card(list_id, card_name):
-    url = f"https://api.trello.com/1/cards"
-    querystring = {"name": card_name, "idList": list_id, "key": key, "token": token}
-    response = requests.request("POST", url, params=querystring)
-    card_id = response.json()["id"]
-    return card_id
-
-def move_card(list_id, card_id):
-    url = f"https://api.trello.com/1/cards/{card_id}"
-    querystring = {"id": card_id, "idList": list_id, "key": key, "token": token}
-    response = requests.request("PUT", url, params=querystring)
-    card_id = response.json()["id"]
-    return card_id
-
-def get_cards(list_id):
-    url = f"https://api.trello.com/1/lists/{list_id}/cards"
-    querystring = {"key": key, "token": token}
-    response = requests.request("GET", url, params=querystring)
-    data = [] 
-    json_data = response.json()
-    for entry in json_data:
-        data.append({'id': entry['id'], 'name': entry['name']}) 
-    return data
-
-def get_card(id):
-    url = f"https://api.trello.com/1/cards/{id}"
-    querystring = {"key": key, "token": token}
-    response = requests.request("GET", url, params=querystring)    
-    json_data = response.json()    
-    card = {'id': json_data['id'], 'name': json_data['name'], 'list_id': json_data['idList'], 'board_id':json_data['idBoard'] }
-    return card
-
-def get_cards_and_lists(board_d):
-    lists = get_lists(board_d)
-    cards = []
-    for list in lists:
-        list_id = list['id']
-        list_name = list['name']
-        list_cards = get_cards(list_id)
-        for card in list_cards:
-            cards.append({'id': card['id'], 'name': card['name'], 'list_id': list_id, 'list_name': list_name})    
-    return cards
-
-def delet_card(id):
-    url = f"https://api.trello.com/1/cards/{id}"
-    querystring = {"key": key, "token": token}
-    response = requests.request("DELETE", url, params=querystring)
-    return response.text
+    params = (
+        ('key', os.environ['Key']),
+        ('token', os.environ['TOKEN'])
+    )
+    requests.delete("https://api.trello.com/1/boards/" + id, params=params)
