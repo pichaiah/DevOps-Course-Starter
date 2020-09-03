@@ -121,8 +121,8 @@
           <tr>
             <td style="width:50%"> {{ item.title }} - {{ item.last_modified }}</td>              
             <td>            
-              <form action="/delete/{{ item.id }}" method="POST">              
-                <button class="btn btn-outline-danger btn-sm" type="submit" id="delete">Delete Item</button>              
+              <form action="/delete_item/{{ item.id }}" method="POST">              
+                <button  type="submit" id="delete_item">Delete</button>              
               </form>                                       
             </td>
           </tr>
