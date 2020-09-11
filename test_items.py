@@ -1,26 +1,27 @@
 import pytest
 import trello_items as trello
-import Item as it
 import view_model as view_model
 import datetime
+from item import Item
     
 @pytest.fixture
 def test_items():
     today = datetime.date.today()
     yesterday = today - datetime.timedelta(days=1)
-    item_list = []
-    item_list.append(it.Item(1, 'To Do', 'Task1', str(today)))
-    item_list.append(it.Item(2, 'To Do', 'Task2', str(today)))
-    item_list.append(it.Item(3, 'Doing', 'Task3', str(today)))
-    item_list.append(it.Item(4, 'Doing', 'Task4', str(today)))
-    item_list.append(it.Item(5, 'Doing', 'Task5', str(today)))
-    item_list.append(it.Item(6, 'Done', 'Task6', str(today)))
-    item_list.append(it.Item(7, 'Done', 'Task7', str(today)))
-    item_list.append(it.Item(8, 'Done', 'Task8', str(today)))
-    item_list.append(it.Item(9, 'Done', 'Task8', str(today)))
-    item_list.append(it.Item(10, 'Done', 'Task10', str(yesterday)))
-    item_list.append(it.Item(11, 'Done', 'Task11', str(yesterday)))
-    item_list.append(it.Item(12, 'Done', 'Task12', str(yesterday)))
+    item_list = [
+        Item(1, 'To Do', 'Task1', str(today)),
+        Item(2, 'To Do', 'Task2', str(today)),
+        Item(3, 'Doing', 'Task3', str(today)),
+        Item(4, 'Doing', 'Task4', str(today)),
+        Item(5, 'Doing', 'Task5', str(today)),
+        Item(6, 'Done', 'Task6', str(today)),
+        Item(7, 'Done', 'Task7', str(today)),
+        Item(8, 'Done', 'Task8', str(today)),
+        Item(9, 'Done', 'Task8', str(today)),
+        Item(10, 'Done', 'Task10', str(yesterday)),
+        Item(11, 'Done', 'Task11', str(yesterday)),
+        Item(12, 'Done', 'Task12', str(yesterday))
+    ]
 
     test_list = view_model.ViewModel(item_list)
 
@@ -30,16 +31,17 @@ def test_items():
 def test_items2():
     today = datetime.date.today()
     yesterday = today - datetime.timedelta(days= 1)
-    item_list = []
-    item_list.append(it.Item(1, 'To Do', 'Task1', str(today)))
-    item_list.append(it.Item(2, 'To Do', 'Task2', str(today)))
-    item_list.append(it.Item(3, 'Doing', 'Task3', str(today)))
-    item_list.append(it.Item(4, 'Doing', 'Task4', str(today)))
-    item_list.append(it.Item(5, 'Done', 'Task5', str(today)))
-    item_list.append(it.Item(6, 'Done', 'Task6', str(yesterday)))
-    item_list.append(it.Item(7, 'Done', 'Task7', str(yesterday)))
-    item_list.append(it.Item(8, 'Done', 'Task8', str(yesterday)))
-
+    item_list = [ 
+        Item(1, 'To Do', 'Task1', str(today)),
+        Item(2, 'To Do', 'Task2', str(today)),
+        Item(3, 'Doing', 'Task3', str(today)),
+        Item(4, 'Doing', 'Task4', str(today)),
+        Item(5, 'Done', 'Task5', str(today)),
+        Item(6, 'Done', 'Task6', str(yesterday)),
+        Item(7, 'Done', 'Task7', str(yesterday)),
+        Item(8, 'Done', 'Task8', str(yesterday))
+    ]
+    
     test_list = view_model.ViewModel(item_list)
 
     return test_list
@@ -48,14 +50,15 @@ def test_items2():
 def test_items3():
     today = datetime.date.today()
     yesterday = today - datetime.timedelta(days= 1)
-    item_list = []    
-    item_list.append(it.Item(1, 'Doing', 'Task1', str(today)))
-    item_list.append(it.Item(2, 'Doing', 'Task2', str(today)))
-    item_list.append(it.Item(3, 'Done', 'Task3', str(today)))
-    item_list.append(it.Item(4, 'Done', 'Task4', str(today)))
-    item_list.append(it.Item(5, 'Done', 'Task5', str(today)))
-    item_list.append(it.Item(6, 'Done', 'Task6', str(yesterday)))
-    item_list.append(it.Item(7, 'Done', 'Task7', str(yesterday)))
+    item_list = [   
+        Item(1, 'Doing', 'Task1', str(today)),
+        Item(2, 'Doing', 'Task2', str(today)),
+        Item(3, 'Done', 'Task3', str(today)),
+        Item(4, 'Done', 'Task4', str(today)),
+        Item(5, 'Done', 'Task5', str(today)),
+        Item(6, 'Done', 'Task6', str(yesterday)),
+        Item(7, 'Done', 'Task7', str(yesterday))
+    ]
 
     test_list = view_model.ViewModel(item_list)
 
