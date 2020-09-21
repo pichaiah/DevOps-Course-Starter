@@ -12,9 +12,17 @@ $ source setup.sh
 ```bash
 $ source setup.sh --windows
 ```
+Setup the below Environment variables for Trello API
 ```
-update trello_items.py with trello key and token.
+TRELLO_KEY
+TRELLO_TOKEN
+TRELLO_BOARD_ID
+TRELLO_TODO_LIST_ID
+TRELLO_DOING_LIST_ID
+TRELLO_DONE_LIST_ID
 ```
+
+Install geckodriver and Firefox as we need these two for running selenium tests.
 
 Once the setup script has completed and all packages have been installed, start the Flask app by running:
 ```bash
