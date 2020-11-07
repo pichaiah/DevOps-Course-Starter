@@ -72,7 +72,7 @@ docker run -p 8000:5000 --env-file .env -d todo-app:prod
 
 To run the development container as a daemon ensure you mount the project directory within the container e.g. run following command
 ```
-docker run -p 5000:5000 --env-file .env --mount type=bind,source=$(pwd),target=/usr/src/app -d t0d0-app:dev
+docker run -p 5000:5000 --env-file .env --mount type=bind,source=$(pwd),target=/usr/src/app -d todo-app:dev
 ```
 
 Note: Add environment variables for Trello API to .env file.
