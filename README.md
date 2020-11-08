@@ -77,6 +77,12 @@ docker run -p 5000:5000 --env-file .env --mount type=bind,source=$(pwd),target=/
 
 Note: Add environment variables for Trello API to .env file.
 
+### Documentation
+
+C4 diagrams have been provided for this application in the files context.drawio, container.drawio and component.drawio.
+These can be viewed at https://app.diagrams.net/
+
+
 You should see output similar to the following:
 ```bash
  * Serving Flask app "app" (lazy loading)
