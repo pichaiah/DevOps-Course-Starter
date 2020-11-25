@@ -3,8 +3,7 @@ import trello_items as trello
 import view_model as view_model
 
 def create_app():
-    app = Flask(__name__)
-    app.config.from_object('env')
+    app = Flask(__name__)    
 
     @app.route('/', methods=['Get'])
     def index():
