@@ -67,7 +67,7 @@ docker build --target production --tag todo-app:prod .
 
 To run the production container as a daemon run following command
 ```
-docker run -p 8000:5000 --env-file .env -d todo-app:prod
+docker run -p 5000:5000 --env-file .env -d todo-app:prod
 ```
 
 To run the development container as a daemon ensure you mount the project directory within the container e.g. run following command

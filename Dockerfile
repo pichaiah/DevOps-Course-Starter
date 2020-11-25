@@ -1,17 +1,16 @@
-FROM python:3-alpine as base
-
+FROM python:3.8-slim-buster as base
 WORKDIR /usr/src/app
-
-RUN wget -q -O- https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+RUN pip install poetry
 ENV PATH=/root/.poetry/bin:${PATH}
 
 FROM base as production
+COPY pyproject.toml .
+RUN poetry install
 COPY ./ ./
-RUN poetry install --no-dev -n
 ENTRYPOINT poetry run gunicorn "app:create_app()" --bind 0.0.0.0:5000
 
 FROM base as development
-COPY --from=production /usr/src/app/pyproject.toml pyproject.toml
-RUN poetry install -n
+COPY ./pyproject.toml ./
+RUN poetry install
 ENTRYPOINT poetry run flask run --host=0.0.0.0
 
