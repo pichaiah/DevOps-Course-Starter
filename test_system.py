@@ -5,6 +5,8 @@ from trello_items import create_board, delete_board
 from threading import Thread
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver import Firefox
+from selenium.webdriver.firefox.options import Options
 import dotenv
 import requests
  
@@ -50,11 +52,13 @@ def test_app():
 
 
 @pytest.fixture(scope="module")
-def driver():     
-    with webdriver.Firefox() as driver:
+def driver():
+    opts = Options()
+    opts.headless = True     
+    with webdriver.Firefox(options=opts) as driver:
         yield driver 
 
-def test_adding_new_task(driver, test_app):
+def test_adding_new_task(driver, test_app):    
     driver.get('http://localhost:5000/')  
         
     input_field = driver.find_element_by_id('title')
