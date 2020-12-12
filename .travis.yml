@@ -1,7 +1,7 @@
 services:
 - docker
 script:
-- docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD 
+- echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USER" --password-stdin
 - docker build --target production --tag $DOCKER_HUB_USER/todo-app:latest .
 - docker push $DOCKER_HUB_USER/todo-app:latest
 
