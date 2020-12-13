@@ -1,16 +1,29 @@
 services:
 - docker
 
+before_script:
+  - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin   #login to dockerhub
+  - curl https://cli-assets.heroku.com/install.sh | sh  #install heroku
+  - docker login --username=$HEROKU_USERNAME --password=$HEROKU_PASSWORD registry.heroku.com  #login to registry.heroku.com 
+
 script:
-- docker build --target test --tag my-test-image .
-- docker run my-test-image test_items.py
-- docker run -e TRELLO_KEY=$TRELLO_KEY -e TRELLO_TOKEN=$TRELLO_TOKEN -e TRELLO_BOARD_ID=$TRELLO_BOARD_ID -e TRELLO_TODO_LIST_ID=$TRELLO_TODO_LIST_ID -e TRELLO_DOING_LIST_ID=$TRELLO_DOING_LIST_ID -e TRELLO_DONE_LIST_ID=$TRELLO_DONE_LIST_ID my-test-image test_client.py
-- docker run -e TRELLO_KEY=$TRELLO_KEY -e TRELLO_TOKEN=$TRELLO_TOKEN -e TRELLO_BOARD_ID=$TRELLO_BOARD_ID -e TRELLO_TODO_LIST_ID=$TRELLO_TODO_LIST_ID -e TRELLO_DOING_LIST_ID=$TRELLO_DOING_LIST_ID -e TRELLO_DONE_LIST_ID=$TRELLO_DONE_LIST_ID   my-test-image test_system.py
+  - docker build --target test --tag my-test-image .
+  - docker run my-test-image test_items.py
+  - docker run -e TRELLO_KEY=$TRELLO_KEY -e TRELLO_TOKEN=$TRELLO_TOKEN -e TRELLO_BOARD_ID=$TRELLO_BOARD_ID -e TRELLO_TODO_LIST_ID=$TRELLO_TODO_LIST_ID -e TRELLO_DOING_LIST_ID=$TRELLO_DOING_LIST_ID -e TRELLO_DONE_LIST_ID=$TRELLO_DONE_LIST_ID my-test-image test_client.py
+  - docker run -e TRELLO_KEY=$TRELLO_KEY -e TRELLO_TOKEN=$TRELLO_TOKEN -e TRELLO_BOARD_ID=$TRELLO_BOARD_ID -e TRELLO_TODO_LIST_ID=$TRELLO_TODO_LIST_ID -e TRELLO_DOING_LIST_ID=$TRELLO_DOING_LIST_ID -e TRELLO_DONE_LIST_ID=$TRELLO_DONE_LIST_ID   my-test-image test_system.py
 
 after_script:
-- docker build --target production --tag $DOCKER_HUB_USER/todo-app:latest .  
+  - docker build --target production --tag $DOCKER_HUB_USER/todo-app:latest .  
 
 after_success:
-- echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USER" --password-stdin
-- docker push $DOCKER_HUB_USER/todo-app:latest
+  - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USER" --password-stdin
+  - docker push $DOCKER_HUB_USER/todo-app:latest
+
+deploy:
+  provider: heroku
+  api_key: $HEROKU_API_KEY
+  app: todo-app-pv
+  on: module_8
+  
+
 
