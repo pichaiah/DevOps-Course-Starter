@@ -3,7 +3,8 @@ services:
 
 before_script:
   - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD   #login to dockerhub
-  - curl https://cli-assets.heroku.com/install.sh | sh  #install heroku  
+  - curl https://cli-assets.heroku.com/install.sh | sh  #install heroku
+  - docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com 
 
 script:
   - docker build --target test --tag my-test-image .
@@ -17,11 +18,11 @@ after_script:
 after_success:  
   - docker push $DOCKER_HUB_USER/todo-app:latest
 
-deploy:
-  provider: heroku
-  api_key: $HEROKU_API_KEY
-  app: todo-app-pv
-  on: module_8
-  
-
-
+deploy:   
+  provider: script
+  script: 
+    - docker push $DOCKER_HUB_USER/todo-app:latest
+    - docker push registry.heroku.com/$HEROKU_APP/web
+    - heroku container:release web --app $HEROKU_APP
+  on:
+    branch: module_8
