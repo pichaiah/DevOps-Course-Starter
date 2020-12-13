@@ -3,17 +3,21 @@ WORKDIR /usr/src/app
 RUN pip install poetry
 ENV PATH=/root/.poetry/bin:${PATH}
 
+################## prod ####################
 FROM base as production
+ENV PORT=5000
 COPY pyproject.toml .
 RUN poetry install
 COPY ./ ./
-ENTRYPOINT poetry run gunicorn "app:create_app()" --bind 0.0.0.0:5000
+ENTRYPOINT ./run.sh
 
+################ development ################
 FROM base as development
 COPY ./pyproject.toml ./
 RUN poetry install
 ENTRYPOINT poetry run flask run --host=0.0.0.0
 
+############## test #######################
 FROM base as test
 COPY pyproject.toml .
 RUN poetry install
