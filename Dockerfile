@@ -5,10 +5,12 @@ ENV PATH=/root/.poetry/bin:${PATH}
 
 ################## prod ####################
 FROM base as production
+WORKDIR /usr/src/app
 ENV PORT=5000
 COPY pyproject.toml .
 RUN poetry install
 COPY ./ ./
+RUN chmod 777 run.sh
 ENTRYPOINT ./run.sh
 
 ################ development ################
