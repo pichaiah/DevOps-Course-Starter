@@ -78,7 +78,7 @@ docker run -p 5000:5000 --env-file .env --mount type=bind,source=$(pwd),target=/
 
 To run the tests in container
 ```
-docker run --env-file .env -d my-test-image
+docker run --env-file .env my-test-image
 ```
 
 Note: Add environment variables for Trello API to .env file.
