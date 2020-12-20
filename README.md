@@ -61,6 +61,7 @@ To build the docker image run the following command
 ```
 docker build --target development --tag todo-app:dev .
 docker build --target production --tag todo-app:prod .
+docker build --target test --tag my-test-image .
 ```
 
 ### Running the container
@@ -73,6 +74,11 @@ docker run -p 5000:5000 --env-file .env -d todo-app:prod
 To run the development container as a daemon ensure you mount the project directory within the container e.g. run following command
 ```
 docker run -p 5000:5000 --env-file .env --mount type=bind,source=$(pwd),target=/usr/src/app -d todo-app:dev
+```
+
+To run the tests in container
+```
+docker run --env-file .env -d my-test-image
 ```
 
 Note: Add environment variables for Trello API to .env file.
