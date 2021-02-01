@@ -114,4 +114,5 @@ env/
 .venv/
 ### Configuration files ###
 .env
-
+.vagrant
+.venv
