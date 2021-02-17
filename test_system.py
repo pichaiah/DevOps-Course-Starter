@@ -1,7 +1,6 @@
 import os
 import pytest
 import app
-from trello_items import create_board, delete_board
 from threading import Thread
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -9,32 +8,12 @@ from selenium.webdriver import Firefox
 from selenium.webdriver.firefox.options import Options
 import dotenv
 import requests
+import db_items
  
 @pytest.fixture(scope='module')
 def test_app():
 
-    file_path = dotenv.find_dotenv('.env')     
-
-    # Create the new board & set it to env variable
-    board_id = create_board() 
-    os.environ['TRELLO_BOARD_ID'] = board_id
-
-    # Get the new board list ids and update the environment variables
-    params = (
-        ('key', os.environ['TRELLO_KEY']),
-        ('token', os.environ['TRELLO_TOKEN']),
-        ('fields', 'all')
-    )
-
-    r = requests.get('https://api.trello.com/1/boards/' + os.environ['TRELLO_BOARD_ID'] + '/lists', params=params)
-
-    to_do_id = r.json()[0]['id']
-    doing_id = r.json()[1]['id']
-    done_id = r.json()[2]['id']
-
-    os.environ['TRELLO_TODO_LIST_ID'] = to_do_id
-    os.environ['TRELLO_DOING_LIST_ID'] = doing_id
-    os.environ['TRELLO_DONE_LIST_ID'] = done_id
+    file_path = dotenv.find_dotenv('.env')  
 
     # construct the new application   
     application = app.create_app()   
@@ -47,7 +26,10 @@ def test_app():
 
     # Tear Down     
     thread.join(1)  
-    delete_board(board_id) 
+    test_item = db_items.get_item("TestItem")
+    if test_item is not None:
+        id = test_item["_id"]
+        db_items.delete_item(id)
 
 
 

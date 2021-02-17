@@ -39,20 +39,15 @@ Once the all dependencies have been installed, start the Flask app in developmen
 $ poetry run flask run
 ```
 
-## Trello Setup
-Setup the below Environment variables for Trello API
-```
-TRELLO_KEY
-TRELLO_TOKEN
-TRELLO_BOARD_ID
-TRELLO_TODO_LIST_ID
-TRELLO_DOING_LIST_ID
-TRELLO_DONE_LIST_ID
-```
 
 Install geckodriver and Firefox as we need these two for running selenium tests.
 
-
+### Using Vagrant
+```bash
+Install required dependencies like Vagrant, VirtualBox and run the below commands 
+$ vagrant up 
+$ vagrant destroy
+```
 ## Running within Docker
 
 ### Building docker image
@@ -113,3 +108,14 @@ heroku container:release web --app=todo-app-pv
 ```
 Note: Setup up the Trello related environment varaibles and PORT (for heroku) in Config Vars section on heroku app settings (https://dashboard.heroku.com/apps/todo-app-pv/settings)
 
+### Database setup
+Setup below environment variable for Database connections
+```
+MONGO_DB_URL ( required)
+MONGO_DB_NAME (optional)
+ITEMS_TABLE_NAME (optional)
+
+Default values
+MONGO_DB_NAME=Board
+ITEMS_TABLE_NAME=Items
+```

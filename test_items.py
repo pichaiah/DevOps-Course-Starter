@@ -1,5 +1,4 @@
 import pytest
-import trello_items as trello
 import view_model as view_model
 import datetime
 from item import Item

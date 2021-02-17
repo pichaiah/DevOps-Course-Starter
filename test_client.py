@@ -2,7 +2,6 @@ import pytest
 import app
 import dotenv
 import requests
-import trello_items
 import json
 import item
 import os
