@@ -30,7 +30,7 @@ def mock_get_request(monkeypatch):
             self.headers = {'test': 'test'}
         
         def json(self):
-            return [{"id": "1", "dateLastActivity": str(datetime.date.today()), "idList": os.environ['TRELLO_TODO_LIST_ID'], "name": "TestName"}]
+            return [{"id": "1", "title": "TestName", "status": "To Do", "last_modified": datetime.datetime.utcnow()}]
 
     def mock_response(*args, **kwargs):
         return MockResponse()
