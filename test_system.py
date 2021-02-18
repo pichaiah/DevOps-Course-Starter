@@ -12,9 +12,6 @@ import db_items
  
 @pytest.fixture(scope='module')
 def test_app():
-
-    file_path = dotenv.find_dotenv('.env')  
-
     # construct the new application   
     application = app.create_app()   
 

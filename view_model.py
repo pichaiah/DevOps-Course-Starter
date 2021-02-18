@@ -26,8 +26,7 @@ class ViewModel:
     
     @property
     def recent_done_items(self):
-        done_filter = self.done_items
-        today = datetime.date.today()
+        done_filter = self.done_items        
         recent_list = self.last_modified_today_items(done_filter)
         return recent_list
 

@@ -16,7 +16,7 @@ headers = {
 def get_db_name():  
     db_name = os.getenv('MONGO_DB_NAME') 
     if db_name is None:
-        db_name = "Items"
+        db_name = "Board"
     return db_name
 
 def get_items_db_tablename():  
@@ -72,8 +72,7 @@ def update_status(id, status):
              "Status": status,
              "LastModified":datetime.datetime.utcnow()}        
         }    
-    card_collection.update(id_filter, newvalues, upsert=True)
-    card = card_collection.find_one(ObjectId(id))    
+    card_collection.update(id_filter, newvalues, upsert=True)    
 
 
 def delete_item(id):
